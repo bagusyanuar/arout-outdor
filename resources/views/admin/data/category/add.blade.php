@@ -31,7 +31,7 @@
         </div>
         <div class="w-100 p-2">
             <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-6 col-sm-11">
+                <div class="col-lg-5 col-md-6 col-sm-11">
                     <div class="card">
                         <div class="card-body">
                             <form method="post" action="/category/create">

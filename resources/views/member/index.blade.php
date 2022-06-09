@@ -2,10 +2,8 @@
 
 @section('content')
     <div class="banner-container">
-        <div class="your-class" style="width: 100%">
-            <img src="{{ asset('/assets/icon/banner-1.jpg') }}" alt="Gambar Banner" class="banner-item">
-            <img src="{{ asset('/assets/icon/banner-2.webp') }}" alt="Gambar Banner" class="banner-item">
-            <img src="{{ asset('/assets/icon/banner-3.jpg') }}" alt="Gambar Banner" class="banner-item">
+        <div class="banner-image" style="width: 100%">
+            <img src="{{ asset('/assets/icon/banner.png') }}" alt="Gambar Banner" class="banner-item" height="400">
         </div>
         <div class="banner-text-container">
             <div class="d-flex justify-content-center align-items-center" style="height: 300px">
@@ -43,11 +41,16 @@
                             <div class="col-lg-3 col-md-4 mb-4">
                                 <div class="card card-item" data-id="{{ $v->id }}" style="cursor: pointer">
                                     <img class="card-img-top" src="{{ asset('/assets/barang'). "/" . $v->gambar }}"
-                                         alt="Card image cap" height="150">
+                                         alt="Card image cap" height="200">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ $v->nama }}</h5>
-                                        <p class="card-text">Rp. {{ $v->harga }}</p>
-                                        <a href="#" class="btn btn-sm btn-primary">Tambah Keranjang</a>
+                                        <h5 class="card-title mb-0 card-text-title">{{ $v->nama }}</h5>
+                                        <p class="card-text" style="color: #00a65a; font-weight: bold">Rp. {{ $v->harga }}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="card-text-stock">Sisa {{ $v->qty }}</span>
+                                            <a href="#" class="btn-circle d-flex justify-content-center align-items-center">
+                                                <i class="fa fa-shopping-bag"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
