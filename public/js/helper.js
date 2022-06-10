@@ -47,3 +47,12 @@ function createLoader(text = 'sedang mengunduh data...', height = 600) {
         '<div>' + text + '</div>' +
         '</div>';
 }
+
+function blockLoading(state) {
+    if (state) {
+        $('#overlay-loading').css('display', 'block')
+    } else {
+        $('#overlay-loading').css('display', 'none')
+    }
+
+}

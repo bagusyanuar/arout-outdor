@@ -61,13 +61,30 @@
                     </a>
                 @endguest
                 @auth()
-                    <a href="/cart" class="navbar-item f-12">
-                        <i class="fa fa-shopping-cart mr-2"></i>
-                    </a>
-                    <a href="/logout" class="navbar-item f-12 ml-3">
-                        <i class="fa fa-power-off mr-1"></i>
-                        <span>Keluar</span>
-                    </a>
+                    <div style="position: relative">
+                        <a href="/keranjang" class="navbar-item f-12">
+                            <i class="fa fa-shopping-cart mr-2"></i>
+                        </a>
+                        <div class="custom-badge d-none" id="cart-notif"></div>
+                    </div>
+
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle color-white" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ auth()->user()->username }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a href="/transaksi" class="navbar-item f-12 ml-3" style="color: black">
+                                <span>Transaksi</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/logout" class="navbar-item f-12 ml-3" style="color: black">
+                                <i class="fa fa-power-off mr-1"></i>
+                                <span>Keluar</span>
+                            </a>
+                        </div>
+                    </div>
+
                 @endauth
             </div>
         </div>
@@ -113,6 +130,33 @@
     });
 </script>
 <script src="{{ asset('/js/helper.js') }}"></script>
+
 @yield('js')
+@auth()
+    <script>
+        async function getCountCart() {
+            try {
+                let el = $('#cart-notif');
+                let response = await $.get('/keranjang/count');
+                let payload = response.payload;
+                if (payload > 0) {
+                    el.html(payload);
+                    el.removeClass('d-none');
+                    el.addClass('d-block');
+                } else {
+                    el.removeClass('d-block');
+                    el.addClass('d-none');
+                }
+                console.log(response);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        $(document).ready(function () {
+            getCountCart();
+        })
+    </script>
+@endauth
 </body>
 </html>

@@ -60,3 +60,14 @@ Route::group(['prefix' => 'barang'], function () {
     Route::post( '/delete', [\App\Http\Controllers\Admin\BarangController::class, 'destroy']);
 });
 
+Route::group(['prefix' => 'keranjang'], function () {
+    Route::get( '/', [\App\Http\Controllers\Member\KeranjangController::class, 'index']);
+    Route::post( '/create', [\App\Http\Controllers\Member\KeranjangController::class, 'add_to_cart']);
+    Route::post( '/checkout', [\App\Http\Controllers\Member\KeranjangController::class, 'checkout']);
+    Route::get( '/count', [\App\Http\Controllers\Member\KeranjangController::class, 'count_cart']);
+});
+
+Route::group(['prefix' => 'transaksi'], function () {
+    Route::get( '/', [\App\Http\Controllers\Member\TransaksiController::class, 'index']);
+});
+
