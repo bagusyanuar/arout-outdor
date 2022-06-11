@@ -55,21 +55,28 @@
         <div class="row mb-3">
             <div class="col-lg-8 col-md-7"></div>
             <div class="col-lg-4 col-md-5">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="w-25 font-weight-bold">Sub Total</span>
-                    <span class="w-75 text-right font-weight-bold" id="lbl-sub-total" data-sub="{{ $data->sum('total') }}">Rp. {{ $data->sum('total') }}</span>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="w-50 font-weight-bold">Sub Total</span>
+                    <span class="w-50 text-right font-weight-bold" id="lbl-sub-total"
+                          data-sub="{{ $data->sum('total') }}">Rp. {{ $data->sum('total') }}</span>
                 </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="w-25 font-weight-bold">Lama Pinjam</span>
-                    <div class="d-flex justify-content-end align-items-center w-75">
-                        <input type="number" name="duration" id="duration" class="form-control form-control-sm w-50" value="1">
-                        <span class="ml-2 font-weight-bold">hari</span>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="w-50 font-weight-bold">Tanggal Pinjam</span>
+                    <div class="d-flex justify-content-end align-items-center w-50">
+                        <input type="date" name="tanggal" id="tanggal" class="form-control form-control-sm w-75"
+                               value="{{ date('Y-m-d') }}">
                     </div>
-
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="w-50 font-weight-bold">Lama Pinjam (hari)</span>
+                    <div class="d-flex justify-content-end align-items-center w-50">
+                        <input type="number" name="duration" id="duration" class="form-control form-control-sm w-50"
+                               value="1">
+                    </div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="w-25 font-weight-bold">Total</span>
-                    <span class="w-75 text-right font-weight-bold" id="lbl-total">Rp. {{ $data->sum('total') }}</span>
+                    <span class="w-50 font-weight-bold">Total</span>
+                    <span class="w-50 text-right font-weight-bold" id="lbl-total">Rp. {{ $data->sum('total') }}</span>
                 </div>
                 <hr>
                 <a href="#" class="btn btn-outline-primary w-100" id="btn-checkout">Checkout</a>
@@ -85,21 +92,24 @@
             try {
                 blockLoading(true);
                 let response = await $.post('/keranjang/checkout', {
-                   lama: $('#duration').val()
+                    lama: $('#duration').val(),
+                    tanggal: $('#tanggal').val()
                 });
                 blockLoading(false);
-                window.location.href = '/transaksi';
-            }catch(e) {
+                let payload = response['payload'];
+                window.location.href = '/transaksi/' + payload + '/pembayaran';
+            } catch (e) {
                 alert('Terjadi Kesalahan');
             }
         }
+
         $(document).ready(function () {
             $('#table-data').DataTable();
             $('#duration').on('change', function () {
                 let qty = parseInt(this.value);
                 let sub = parseInt($('#lbl-sub-total').attr('data-sub'));
                 let total = qty * sub;
-                $('#lbl-total').html('RP. '+total);
+                $('#lbl-total').html('RP. ' + total);
                 console.log(total);
             });
 

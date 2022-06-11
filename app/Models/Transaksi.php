@@ -16,7 +16,10 @@ class Transaksi extends Model
         'sub_total',
         'diskon',
         'total',
-        'status'
+        'status',
+        'bukti',
+        'bank',
+        'deskripsi'
     ];
 
     public function user()

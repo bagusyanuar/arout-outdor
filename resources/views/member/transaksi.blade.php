@@ -11,7 +11,7 @@
             <li class="breadcrumb-item">
                 <a href="/dashboard">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Keranjang
+            <li class="breadcrumb-item active" aria-current="page">Transaksi
             </li>
         </ol>
         <div class="mt-5">
@@ -22,8 +22,10 @@
                     <th scope="col">No. Transaksi</th>
                     <th scope="col">Sewa</th>
                     <th scope="col">Kembali</th>
+                    <th scope="col">Lama Sewa</th>
                     <th scope="col">Total</th>
                     <th scope="col">Status</th>
+                    <th scope="col">action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,8 +37,42 @@
                         </td>
                         <td>{{ $v->tanggal }}</td>
                         <td>{{ $v->tanggal_kembali }}</td>
+                        @php
+                            $sewa = new DateTime($v->tanggal);
+                            $kembali = new DateTime($v->tanggal_kembali);
+                            $interval = $sewa->diff($kembali);
+
+                        @endphp
+                        <td>{{ $interval->d }} hari</td>
                         <td>{{ $v->total }}</td>
-                        <td>{{ $v->status }}</td>
+                        @php
+                            $status = 'Belum Lunas';
+                            switch ($v->status){
+                                case 'menunggu':
+                                    $status = 'Menunggu';
+                                    break;
+                                case  'lunas':
+                                    $status = 'Lunas';
+                                    break;
+                                case  'tolak':
+                                    $status = 'Pesanan Di Tolak';
+                                    break;
+                                case  'proses':
+                                    $status = 'Proses Sewa';
+                                    break;
+                                case  'selesai':
+                                    $status = 'Selesai';
+                                    break;
+                                default:
+                                    break;
+                            }
+                        @endphp
+                        <td>{{ $status }}</td>
+                        <td>
+                            <a href="/transaksi/{{ $v->id }}/detail" class="btn btn-sm btn-info btn-edit"
+                               ><i class="fa fa-info"></i></a>
+                            <a href="/transaksi/{{ $v->id }}/pembayaran" class="btn btn-sm btn-success" ><i
+                                    class="fa fa-credit-card"></i></a></td>
                     </tr>
                 @empty
                 @endforelse

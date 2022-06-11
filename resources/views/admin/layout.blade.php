@@ -92,7 +92,7 @@
                                 <a href="/category"
                                    class="nav-link">
                                     <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
-                                    <p>Admin</p>
+                                    <p>Kategori</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -114,17 +114,31 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/penerimaan"
+                                <a href="/pesanan"
                                    class="nav-link">
                                     <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
-                                    <p>Penerimaan</p>
+                                    <p>Pesanan Baru</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pengambilan"
+                                   class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
+                                    <p>Pengambilan Pesanan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/pengembalian"
                                    class="nav-link">
                                     <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
-                                    <p>Pengembalian</p>
+                                    <p>Pengembalian Pesanan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pesanan-selesai"
+                                   class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
+                                    <p>Selesai</p>
                                 </a>
                             </li>
                         </ul>
