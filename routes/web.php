@@ -65,6 +65,22 @@ Route::group(['prefix' => 'pesanan'], function () {
     Route::match(['get', 'post'], '/{id}', [\App\Http\Controllers\Admin\TransaksiController::class, 'pesanan_detail']);
 });
 
+Route::group(['prefix' => 'pengambilan'], function () {
+    Route::get( '/', [\App\Http\Controllers\Admin\TransaksiController::class, 'pengambilan']);
+    Route::match(['get', 'post'], '/{id}', [\App\Http\Controllers\Admin\TransaksiController::class, 'pengambilan_detail']);
+});
+
+Route::group(['prefix' => 'pengembalian'], function () {
+    Route::get( '/', [\App\Http\Controllers\Admin\TransaksiController::class, 'pengembalian']);
+    Route::match(['get', 'post'], '/{id}', [\App\Http\Controllers\Admin\TransaksiController::class, 'pengembalian_detail']);
+});
+
+Route::group(['prefix' => 'pesanan-selesai'], function () {
+    Route::get( '/', [\App\Http\Controllers\Admin\TransaksiController::class, 'pesanan_selesai']);
+    Route::match(['get', 'post'], '/{id}', [\App\Http\Controllers\Admin\TransaksiController::class, 'pesanan_selesai_detail']);
+    Route::get( '/{id}/cetak', [\App\Http\Controllers\Admin\TransaksiController::class, 'pesanan_selesai_cetak']);
+});
+
 Route::group(['prefix' => 'keranjang'], function () {
     Route::get( '/', [\App\Http\Controllers\Member\KeranjangController::class, 'index']);
     Route::post( '/create', [\App\Http\Controllers\Member\KeranjangController::class, 'add_to_cart']);

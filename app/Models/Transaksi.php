@@ -19,7 +19,9 @@ class Transaksi extends Model
         'status',
         'bukti',
         'bank',
-        'deskripsi'
+        'deskripsi',
+        'tanggal_dikembalikan',
+        'denda'
     ];
 
     public function user()
