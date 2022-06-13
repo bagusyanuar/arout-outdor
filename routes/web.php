@@ -81,6 +81,18 @@ Route::group(['prefix' => 'pesanan-selesai'], function () {
     Route::get( '/{id}/cetak', [\App\Http\Controllers\Admin\TransaksiController::class, 'pesanan_selesai_cetak']);
 });
 
+Route::group(['prefix' => 'laporan-penyewaan'], function () {
+    Route::get( '/', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_penyewaan']);
+    Route::get( '/data', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_penyewaan_data']);
+    Route::get( '/cetak', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_penyewaan_cetak']);
+});
+
+Route::group(['prefix' => 'laporan-barang-terlaris'], function () {
+    Route::get( '/', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_barang_terlaris']);
+    Route::get( '/data', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_barang_terlaris_data']);
+    Route::get( '/cetak', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_penyewaan_cetak']);
+});
+
 Route::group(['prefix' => 'keranjang'], function () {
     Route::get( '/', [\App\Http\Controllers\Member\KeranjangController::class, 'index']);
     Route::post( '/create', [\App\Http\Controllers\Member\KeranjangController::class, 'add_to_cart']);

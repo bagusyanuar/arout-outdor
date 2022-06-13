@@ -57,6 +57,9 @@
                                     case 'menunggu':
                                         $status = 'Menunggu';
                                         break;
+                                    case  'tolak':
+                                        $status = 'Pesanan Di Tolak';
+                                        break;
                                     case  'lunas':
                                         $status = 'Lunas';
                                         break;

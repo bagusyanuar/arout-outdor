@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +29,7 @@ class Transaksi extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
     public function keranjang()
     {
         return $this->hasMany(Keranjang::class, 'transaksi_id');

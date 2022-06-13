@@ -124,14 +124,14 @@
                                 <a href="/pengambilan"
                                    class="nav-link">
                                     <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
-                                    <p>Pengambilan Pesanan</p>
+                                    <p>Pengambilan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/pengembalian"
                                    class="nav-link">
                                     <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
-                                    <p>Pengembalian Pesanan</p>
+                                    <p>Pengembalian</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -139,6 +139,31 @@
                                    class="nav-link">
                                     <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
                                     <p>Selesai</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-bar-chart"></i>
+                            <p>
+                                Laporan
+                                <i class="right fa fa-angle-down"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/laporan-penyewaan"
+                                   class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
+                                    <p>Penyewaan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/laporan-barang-terlaris"
+                                   class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon" aria-hidden="true"></i>
+                                    <p>Barang Terlaris</p>
                                 </a>
                             </li>
                         </ul>

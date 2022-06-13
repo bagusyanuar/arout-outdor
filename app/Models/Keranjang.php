@@ -27,4 +27,17 @@ class Keranjang extends Model
     {
         return $this->belongsTo(Barang::class, 'barang_id');
     }
+
+    public function transaksi()
+    {
+        return $this->belongsTo(Transaksi::class, 'transaksi_id');
+    }
+
+    public function transaksi_sukses()
+    {
+        return $this->belongsTo(Transaksi::class, 'transaksi_id')
+            ->where('status', '!=', 'menunggu')
+            ->where('status', '!=', 'pesan')
+            ->where('status', '!=', 'tolak');
+    }
 }

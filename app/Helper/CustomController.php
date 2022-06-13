@@ -235,7 +235,8 @@ class CustomController extends Controller
     {
         $html = view($viewRender)->with($data);
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($html)->setPaper('a5', 'landscape');
+        $pdf->loadHTML($html);
+//        ->setPaper('a5', 'landscape')
         return $pdf->stream();
     }
 
