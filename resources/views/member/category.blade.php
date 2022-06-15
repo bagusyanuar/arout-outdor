@@ -31,8 +31,10 @@
             <div class="col-lg-10">
                 <div class="d-flex align-items-center justify-content-end mb-2">
                     <ol class="breadcrumb breadcrumb-transparent mb-0">
-
-                        <li class="breadcrumb-item active" aria-current="page">Beranda
+                        <li class="breadcrumb-item">
+                            <a href="/">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $current_category->nama }}
                         </li>
                     </ol>
                 </div>
@@ -49,24 +51,31 @@
 
                 <div class="panel-product" id="panel-product">
                     <div class="row">
-                        @foreach($data as $v)
+                        @forelse($data as $v)
                             <div class="col-lg-3 col-md-4 mb-4">
                                 <div class="card card-item" data-id="{{ $v->id }}" style="cursor: pointer">
                                     <img class="card-img-top" src="{{ asset('/assets/barang'). "/" . $v->gambar }}"
                                          alt="Card image cap" height="200">
                                     <div class="card-body">
                                         <h5 class="card-title mb-0 card-text-title">{{ $v->nama }}</h5>
-                                        <p class="card-text" style="color: #00a65a; font-weight: bold">Rp. {{ $v->harga }}</p>
+                                        <p class="card-text" style="color: #00a65a; font-weight: bold">
+                                            Rp. {{ $v->harga }}</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="card-text-stock">Sisa {{ $v->qty }}</span>
-                                            <a href="#" data-id="{{ $v->id }}" class="btn-circle d-flex justify-content-center align-items-center btn-shop">
+                                            <a href="#" data-id="{{ $v->id }}"
+                                               class="btn-circle d-flex justify-content-center align-items-center btn-shop">
                                                 <i class="fa fa-shopping-bag"></i>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <div class="col-lg-12 col-md-12">
+                                <div class="d-flex align-items-center justify-content-center" style="height: 600px"><p
+                                        class="font-weight-bold">Tidak Ada Produk</p></div>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -76,6 +85,7 @@
 
 @section('js')
     <script>
+        var id = '{{ $current_category->id }}';
 
         function emptyElementProduct() {
             return '<div class="col-lg-12 col-md-12" >' +
@@ -117,7 +127,7 @@
             el.append(createLoader());
             let name = $('#filter').val();
             try {
-                let response = await $.get('/product/data?name=' + name);
+                let response = await $.get('/kategori/' + id + '/data?name=' + name);
                 el.empty();
                 if (response['status'] === 200) {
                     if (response['payload'].length > 0) {
@@ -148,15 +158,16 @@
                     qty: 1
                 });
                 blockLoading(false);
-                if(response.status === 202) {
+                if (response.status === 202) {
                     window.location.href = '/login-member';
-                }else {
-                        window.location.href = '/keranjang';
+                } else {
+                    window.location.href = '/keranjang';
                 }
-            }catch(e) {
+            } catch (e) {
                 alert('terjadi kesalahan server')
             }
         }
+
         $(document).ready(function () {
             $('.card-item').on('click', function () {
                 let id = this.dataset.id;

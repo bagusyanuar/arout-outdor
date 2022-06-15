@@ -24,7 +24,7 @@
                     <th scope="col">Qty</th>
                     <th scope="col">Harga</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,7 +44,10 @@
                         <td>{{ $v->qty }}</td>
                         <td>{{ $v->harga }}</td>
                         <td>{{ $v->total }}</td>
-                        <td></td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $v->id }}"><i
+                                    class="fa fa-trash"></i></a>
+                        </td>
                     </tr>
                 @empty
                 @endforelse
@@ -103,6 +106,18 @@
             }
         }
 
+        async function delete_keranjang(id) {
+            try {
+                blockLoading(true);
+                let response = await $.post('/keranjang/destroy', {
+                    id: id
+                });
+                blockLoading(false);
+                window.location.reload()
+            } catch (e) {
+                alert('Terjadi Kesalahan');
+            }
+        }
         $(document).ready(function () {
             $('#table-data').DataTable();
             $('#duration').on('change', function () {
@@ -116,7 +131,17 @@
             $('#btn-checkout').on('click', function (e) {
                 e.preventDefault();
                 checkout();
+            });
+
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                AlertConfirm('Apakah anda yakin menghapus?', 'Data yang dihapus tidak dapat dikembalikan!', function () {
+                    delete_keranjang(id);
+                });
             })
+
+
         });
     </script>
 @endsection

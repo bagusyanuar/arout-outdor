@@ -22,7 +22,10 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'ind
 
 Route::get('/product/{id}/detail', [\App\Http\Controllers\Member\HomepageController::class, 'product_page']);
 Route::get('/product/data', [\App\Http\Controllers\Member\ProductController::class, 'get_product_by_name']);
-
+Route::get('/kategori/{id}', [\App\Http\Controllers\Member\HomepageController::class, 'category_page']);
+Route::get('/kategori/{id}/data', [\App\Http\Controllers\Member\HomepageController::class, 'get_product_by_name_and_category']);
+Route::get('/about', [\App\Http\Controllers\Member\HomepageController::class, 'about_page']);
+Route::get('/contact', [\App\Http\Controllers\Member\HomepageController::class, 'contact_page']);
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get( '/', [\App\Http\Controllers\Admin\AdminController::class, 'index']);
@@ -98,11 +101,13 @@ Route::group(['prefix' => 'keranjang'], function () {
     Route::post( '/create', [\App\Http\Controllers\Member\KeranjangController::class, 'add_to_cart']);
     Route::post( '/checkout', [\App\Http\Controllers\Member\KeranjangController::class, 'checkout']);
     Route::get( '/count', [\App\Http\Controllers\Member\KeranjangController::class, 'count_cart']);
+    Route::post( '/destroy', [\App\Http\Controllers\Member\KeranjangController::class, 'delete_cart']);
 });
 
 Route::group(['prefix' => 'transaksi'], function () {
     Route::get( '/', [\App\Http\Controllers\Member\TransaksiController::class, 'index']);
     Route::get( '/{id}/detail', [\App\Http\Controllers\Member\TransaksiController::class, 'detail']);
+    Route::get( '/{id}/cetak', [\App\Http\Controllers\Member\TransaksiController::class, 'cetak_nota']);
     Route::match(['post', 'get'], '/{id}/pembayaran', [\App\Http\Controllers\Member\TransaksiController::class, 'pembayaran']);
 });
 

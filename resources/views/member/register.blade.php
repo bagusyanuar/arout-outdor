@@ -24,7 +24,7 @@
             <div class="card">
                 <div class="card-body">
                     <img src="{{ asset('/assets/icon/logo.png') }}" class="w-100 login-icon mb-3"/>
-                    <p class="f-bold mb-2 text-center" style="font-size: 18px">Silahkan Login</p>
+                    <p class="f-bold mb-2 text-center" style="font-size: 18px">Silahkan Daftar</p>
                     <form method="post">
                         @csrf
                         <div class="row">

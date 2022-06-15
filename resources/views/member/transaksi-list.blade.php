@@ -129,6 +129,13 @@
                     </div>
                 @endif
                 <hr>
+                @if($data->status == 'pesan' || $data->status == 'menunggu' || $data->status == 'tolak')
+                @else
+                    <a href="#" class="btn btn-success w-100" id="btn-cetak">
+                        <i class="fa fa-print mr-2"></i>
+                        <span>Cetak Bukti</span>
+                    </a>
+                @endif
             </div>
         </div>
     </div>
@@ -136,8 +143,13 @@
 
 @section('js')
     <script>
+        var id = '{{ $data->id }}';
         $(document).ready(function () {
             $('#table-data').DataTable();
+            $('#btn-cetak').on('click', function (e) {
+                e.preventDefault();
+                window.open('/transaksi/' + id + '/cetak', '_blank');
+            })
         });
     </script>
 @endsection

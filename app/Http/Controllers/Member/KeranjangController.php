@@ -53,6 +53,17 @@ class KeranjangController extends CustomController
         }
     }
 
+    public function delete_cart()
+    {
+        try {
+
+            $id = $this->postField('id');
+            Keranjang::destroy($id);
+            return $this->jsonResponse('success', 200);
+        } catch (\Exception $e) {
+            return $this->jsonResponse('failed ' . $e->getMessage(), 500);
+        }
+    }
     public function count_cart()
     {
         try {

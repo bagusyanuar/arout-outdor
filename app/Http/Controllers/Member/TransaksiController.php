@@ -48,4 +48,13 @@ class TransaksiController extends CustomController
         return view('member.transaksi-detail')->with(['data' => $transaksi]);
     }
 
+    public function cetak_nota($id)
+    {
+        $data = Transaksi::with(['user', 'keranjang.barang'])->findOrFail($id);
+        $html = view('member.nota')->with(['data' => $data]);
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($html)->setPaper('a5', 'landscape');
+        return $pdf->stream();
+    }
+
 }

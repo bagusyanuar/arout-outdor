@@ -44,13 +44,10 @@
                     <a class="nav-link f-bold color-semi-white" aria-current="page" href="/">Beranda</a>
                 </li>
                 <li class="nav-item mr-1">
-                    <a class="nav-link f-bold color-semi-white" aria-current="page" href="/">Produk</a>
+                    <a class="nav-link f-bold color-semi-white" aria-current="page" href="/about">Tentang Kami</a>
                 </li>
                 <li class="nav-item mr-1">
-                    <a class="nav-link f-bold color-semi-white" aria-current="page" href="/">Tentang Kami</a>
-                </li>
-                <li class="nav-item mr-1">
-                    <a class="nav-link f-bold color-semi-white" aria-current="page" href="/">Hubungi Kami</a>
+                    <a class="nav-link f-bold color-semi-white" aria-current="page" href="/contact">Hubungi Kami</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">
