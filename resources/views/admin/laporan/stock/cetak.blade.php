@@ -1,7 +1,7 @@
 @extends('admin.cetak.index')
 
 @section('content')
-    <div class="text-center f-bold report-title">LAPORAN BARANG TERLARIS AROUT OUTDOOR</div>
+    <div class="text-center f-bold report-title">LAPORAN STOCK BARANG AROUT OUTDOOR</div>
 
     <hr>
     <table id="my-table" class="table display">
@@ -10,7 +10,7 @@
             <th width="5%" class="text-center">#</th>
             <th>Nama Barang</th>
             <th>Kategori</th>
-            <th>Qty Tersewa</th>
+            <th>Qty</th>
         </tr>
         </thead>
         <tbody>
@@ -19,7 +19,7 @@
                 <td class="text-center">{{ $loop->index + 1 }}</td>
                 <td>{{ $v->nama }}</td>
                 <td>{{ $v->category->nama }}</td>
-                <td class="text-center">{{ $v->tersewa }}</td>
+                <td class="text-center">{{ $v->qty }}</td>
             </tr>
         @endforeach
         </tbody>

@@ -11,12 +11,12 @@
     @endif
     <div class="container-fluid pt-3">
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <p class="font-weight-bold mb-0" style="font-size: 20px">Halaman Laporan Barang Terlaris</p>
+            <p class="font-weight-bold mb-0" style="font-size: 20px">Halaman Laporan Stock barang</p>
             <ol class="breadcrumb breadcrumb-transparent mb-0">
                 <li class="breadcrumb-item">
                     <a href="/dashboard">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Laporan Barang Terlaris
+                <li class="breadcrumb-item active" aria-current="page">Laporan Stock barang
                 </li>
             </ol>
         </div>
@@ -36,7 +36,7 @@
                     <th width="5%" class="text-center">#</th>
                     <th>Nama Barang</th>
                     <th>Kategori</th>
-                    <th width="12%">Qty Tersewa</th>
+                    <th width="12%">Qty</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -56,11 +56,11 @@
             table.ajax.reload();
         }
         $(document).ready(function () {
-            table = DataTableGenerator('#table-data', '/laporan-barang-terlaris/data', [
+            table = DataTableGenerator('#table-data', '/laporan-stock/data', [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
                 {data: 'nama'},
                 {data: 'category.nama'},
-                {data: 'tersewa'},
+                {data: 'qty'},
             ]);
 
             $('#tgl1').on('change', function (e) {
@@ -72,7 +72,7 @@
 
             $('#btn-cetak').on('click', function (e) {
                 e.preventDefault();
-                window.open('/laporan-barang-terlaris/cetak', '_blank');
+                window.open('/laporan-stock/cetak', '_blank');
             })
         });
     </script>

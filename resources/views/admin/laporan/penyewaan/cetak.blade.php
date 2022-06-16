@@ -15,6 +15,7 @@
             <th>Lama Sewa (hari)</th>
             <th>Total</th>
             <th>Denda</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
@@ -32,6 +33,23 @@
                 <td>{{ $interval->d }}</td>
                 <td class="text-center">{{ $v->total }}</td>
                 <td class="text-center">{{ $v->denda }}</td>
+                @php
+                    $status = '-';
+                    switch ($v->status){
+                        case  'lunas':
+                            $status = 'Lunas';
+                            break;
+                        case  'proses':
+                            $status = 'Proses Sewa';
+                            break;
+                        case  'selesai':
+                            $status = 'Selesai';
+                            break;
+                        default:
+                            break;
+                    }
+                @endphp
+                <td class="text-center">{{ $status }}</td>
             </tr>
         @endforeach
         </tbody>

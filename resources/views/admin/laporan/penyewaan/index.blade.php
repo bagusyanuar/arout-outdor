@@ -46,12 +46,17 @@
                     <th width="12%">Lama Sewa</th>
                     <th>Total</th>
                     <th>Denda</th>
+                    <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 </tbody>
             </table>
+        </div>
+        <div class="text-right">
+            <span class="mr-2 font-weight-bold">Total Pendapatan : </span>
+            <span class="font-weight-bold" id="lbl-total">Rp. 0</span>
         </div>
     </div>
 
@@ -61,16 +66,19 @@
     <script src="{{ asset('/js/helper.js') }}"></script>
     <script type="text/javascript">
         var table;
+
         function reload() {
             table.ajax.reload();
         }
+
         $(document).ready(function () {
             table = DataTableGenerator('#table-data', '/laporan-penyewaan/data', [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
                 {data: 'user.username'},
                 {data: 'no_transaksi'},
                 {data: 'tanggal'},
-                {data: null, render: function (data, type, row, meta) {
+                {
+                    data: null, render: function (data, type, row, meta) {
                         let tgl1 = data['tanggal'];
                         let tgl2 = data['tanggal_kembali'];
                         return calculate_days(tgl1, tgl2);
@@ -78,11 +86,39 @@
                 },
                 {data: 'total'},
                 {data: 'denda'},
+                {
+                    data: null, render: function (data, type, row, meta) {
+                        let tgl1 = data['tanggal'];
+                        let tgl2 = data['tanggal_kembali'];
+                        let status = '-';
+                        switch (data['status']) {
+                            case 'lunas':
+                                status = 'Lunas';
+                                break;
+                            case 'proses':
+                                status = 'Proses Sewa';
+                                break;
+                            case 'selesai':
+                                status = 'Selesai';
+                                break;
+                            default:
+                                break;
+                        }
+                        return status;
+                    }
+                },
             ], [], function (d) {
                 d.tgl1 = $('#tgl1').val();
                 d.tgl2 = $('#tgl2').val();
             }, {
-                dom: 'ltipr'
+                dom: 'ltipr',
+                "fnDrawCallback": function( oSettings ) {
+                    let data = this.fnGetData();
+                    let sum_total = data.map(item => item['total']).reduce((prev, next) => prev + next, 0);
+                    let sum_denda = data.map(item => item['denda']).reduce((prev, next) => prev + next, 0);
+                    let total = sum_total + sum_denda;
+                    $('#lbl-total').html('Rp. '+total);
+                }
             });
 
             $('#tgl1').on('change', function (e) {

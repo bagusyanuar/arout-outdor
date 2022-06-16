@@ -93,7 +93,13 @@ Route::group(['prefix' => 'laporan-penyewaan'], function () {
 Route::group(['prefix' => 'laporan-barang-terlaris'], function () {
     Route::get( '/', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_barang_terlaris']);
     Route::get( '/data', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_barang_terlaris_data']);
-    Route::get( '/cetak', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_penyewaan_cetak']);
+    Route::get( '/cetak', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_barang_terlaris_cetak']);
+});
+
+Route::group(['prefix' => 'laporan-stock'], function () {
+    Route::get( '/', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_stock']);
+    Route::get( '/data', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_stock_data']);
+    Route::get( '/cetak', [\App\Http\Controllers\Admin\LaporanController::class, 'laporan_stock_cetak']);
 });
 
 Route::group(['prefix' => 'keranjang'], function () {
