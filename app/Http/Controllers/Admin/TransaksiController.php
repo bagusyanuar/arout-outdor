@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helper\CustomController;
 use App\Models\Transaksi;
+use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends CustomController
 {
@@ -22,16 +23,36 @@ class TransaksiController extends CustomController
 
     public function pesanan_detail($id)
     {
-        $data = Transaksi::with(['user', 'keranjang'])->where('status', '=', 'menunggu')
+        $data = Transaksi::with(['user', 'keranjang.barang'])->where('status', '=', 'menunggu')
             ->where('id', '=', $id)
             ->firstOrFail();
 
-        if($this->request->method() === 'POST') {
-            $data->update([
-                'status' => $this->postField('status'),
-                'deskripsi' => $this->postField('deskripsi')
-            ]);
-            return redirect('/pesanan');
+        if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
+            try {
+                foreach ($data->keranjang as $v) {
+                    $qty = $v->qty;
+                    $stock = $v->barang->qty;
+                    if ($stock < $qty) {
+                        DB::rollBack();
+                        return redirect()->back()->with(['failed' => 'Stok Barang ' . $v->barang->nama . ' Kurang']);
+                    }
+                    $current_qty = $stock - $qty;
+                    $v->barang()->update([
+                        'qty' => $current_qty
+                    ]);
+                }
+                $data->update([
+                    'status' => $this->postField('status'),
+                    'deskripsi' => $this->postField('deskripsi')
+                ]);
+                DB::commit();
+                return redirect('/pesanan');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->back()->with(['failed' => 'terjadi kesalahan']);
+            }
+
         }
         return view('admin.transaksi.pesanan.detail')->with(['data' => $data]);
     }
@@ -48,7 +69,7 @@ class TransaksiController extends CustomController
             ->where('id', '=', $id)
             ->firstOrFail();
 
-        if($this->request->method() === 'POST') {
+        if ($this->request->method() === 'POST') {
             $data->update([
                 'status' => 'proses',
             ]);
@@ -65,17 +86,33 @@ class TransaksiController extends CustomController
 
     public function pengembalian_detail($id)
     {
-        $data = Transaksi::with(['user', 'keranjang'])->where('status', '=', 'proses')
+        $data = Transaksi::with(['user', 'keranjang.barang'])->where('status', '=', 'proses')
             ->where('id', '=', $id)
             ->firstOrFail();
 
-        if($this->request->method() === 'POST') {
-            $data->update([
-                'status' => 'selesai',
-                'tanggal_dikembalikan' => $this->postField('kembali'),
-                'denda' => $this->postField('denda')
-            ]);
-            return redirect('/pengembalian');
+        if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
+            try {
+                $data->update([
+                    'status' => 'selesai',
+                    'tanggal_dikembalikan' => $this->postField('kembali'),
+                    'denda' => $this->postField('denda')
+                ]);
+                foreach ($data->keranjang as $v) {
+                    $qty = $v->qty;
+                    $stock = $v->barang->qty;
+                    $current_qty = $stock + $qty;
+                    $v->barang()->update([
+                        'qty' => $current_qty
+                    ]);
+                }
+                DB::commit();
+                return redirect('/pengembalian');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->back()->with(['failed' => 'terjadi kesalahan']);
+            }
+
         }
         return view('admin.transaksi.pengembalian.detail')->with(['data' => $data]);
     }
