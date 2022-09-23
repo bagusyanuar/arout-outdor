@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Helper\CustomController;
+use App\Models\Denda;
 use App\Models\Transaksi;
 use Illuminate\Support\Facades\DB;
 
@@ -89,7 +90,8 @@ class TransaksiController extends CustomController
         $data = Transaksi::with(['user', 'keranjang.barang'])->where('status', '=', 'proses')
             ->where('id', '=', $id)
             ->firstOrFail();
-
+        $tmp_denda = Denda::first();
+        $denda = $tmp_denda !== null ? $tmp_denda->nominal : 0;
         if ($this->request->method() === 'POST') {
             DB::beginTransaction();
             try {
@@ -114,7 +116,7 @@ class TransaksiController extends CustomController
             }
 
         }
-        return view('admin.transaksi.pengembalian.detail')->with(['data' => $data]);
+        return view('admin.transaksi.pengembalian.detail')->with(['data' => $data, 'denda' => $denda]);
     }
 
     public function pesanan_selesai()

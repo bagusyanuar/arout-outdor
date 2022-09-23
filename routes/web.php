@@ -63,6 +63,7 @@ Route::group(['prefix' => 'barang'], function () {
     Route::post( '/delete', [\App\Http\Controllers\Admin\BarangController::class, 'destroy']);
 });
 
+Route::match(['post', 'get'], '/denda', [\App\Http\Controllers\Admin\DendaController::class, 'index']);
 Route::group(['prefix' => 'pesanan'], function () {
     Route::get( '/', [\App\Http\Controllers\Admin\TransaksiController::class, 'pesanan']);
     Route::match(['get', 'post'], '/{id}', [\App\Http\Controllers\Admin\TransaksiController::class, 'pesanan_detail']);

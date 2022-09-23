@@ -104,6 +104,13 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a href="/denda"
+                           class="nav-link">
+                            <i class="fa fa-money nav-icon" aria-hidden="true"></i>
+                            <p>Denda</p>
+                        </a>
+                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-briefcase"></i>

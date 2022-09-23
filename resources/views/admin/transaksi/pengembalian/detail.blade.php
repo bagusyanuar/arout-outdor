@@ -132,14 +132,22 @@
                                     <label for="kembali">Di Kembalikan Tanggal</label>
                                     <input type="date" class="form-control" id="kembali" name="kembali" required value="{{ date('Y-m-d') }}">
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
                                     <span class="font-weight-bold w-50">Keterlambatan</span>
                                     <span class="font-weight-bold w-50 text-right" id="terlambat">0 hari</span>
                                 </div>
-                                <div class="form-group w-100 mt-2 d-none" id="panel-denda">
-                                    <label for="denda">Denda</label>
-                                    <input type="number" class="form-control" id="denda" name="denda" required value="0">
+                                <div class="w-100 mt-2 d-none" id="panel-denda">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="font-weight-bold w-50">Denda (/hari)</span>
+                                        <span class="font-weight-bold w-50 text-right" id="denda-per-hari">Rp. {{ $denda }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="font-weight-bold w-50">Total Denda</span>
+                                        <span class="font-weight-bold w-50 text-right" id="denda-total">Rp. {{ $denda }}</span>
+                                    </div>
+                                    <input type="hidden" class="form-control" id="denda" name="denda" required value="{{ $denda }}">
                                 </div>
+                                <hr>
                                 <button type="submit" class="btn btn-primary w-100" id="btn-submit">Submit
                                 </button>
                             </form>
@@ -156,17 +164,24 @@
     <script src="{{ asset('/js/helper.js') }}"></script>
     <script type="text/javascript">
         var tanggal_kembali = '{{ $data->tanggal_kembali }}';
+        var denda = parseInt('{{ $denda }}');
 
         function calculate_between_days(tgl1, tgl2) {
             let diff_in_time = tgl2.getTime() - tgl1.getTime();
             return diff_in_time / (1000 * 3600 * 24);
         }
 
+        function hitung_denda(terlambat) {
+            let total = denda * terlambat;
+            $('#denda-total').html('Rp. '+total);
+            $('#denda').val(total);
+        }
         function hitung_terlambat(val) {
             if(val > 0) {
                 $('#terlambat').html(val+' hari');
                 $('#panel-denda').addClass('d-block');
                 $('#panel-denda').removeClass('d-none');
+                hitung_denda(val);
             } else {
                 $('#terlambat').html('0 hari');
                 $('#panel-denda').addClass('d-none');
